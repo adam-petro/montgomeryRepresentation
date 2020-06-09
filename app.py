@@ -14,39 +14,38 @@ import sys
 def findClosestPowerOfTwo(n):
     n = int(n)
     res = 2
-    while (res < n):
+    while res < n:
         res = res * 2
     return res
 
 
-def inverznyEuklid(a, m):
-    a = int(a)
-    m = int(m)
-    m0 = m
+def inverseEuclid(r, n):
+    r = int(r)
+    n = int(n)
+    toAdd = n
     y = 0
     x = 1
 
-    if int(m) == 1:
+    if int(n) == 1:
         return 0
 
-    while int(a) > 1:
-        q = a // int(m)
-        t = m
-        m = a % int(m)
-        a = t
+    while int(r) > 1:
+        quot = r // int(n)
+        t = n
+        n = r % int(n)
+        r = t
         t = y
 
-        y = x - q * y
+        y = x - quot * y
         x = t
 
     if x < 0:
-        x = x + m0
+        x = x + toAdd
 
     return x
 
 
 def convertToMontgomery(x, n):
-    #r = 64  # 2^6
     r = findClosestPowerOfTwo(n)
     res = (int(x) * int(r)) % int(n)
     result = str(res)
@@ -58,7 +57,7 @@ def convertToMontgomery(x, n):
 
 def convertFromMontgomery(x, n):
     r = findClosestPowerOfTwo(n)
-    invR = inverznyEuklid(r, n)
+    invR = inverseEuclid(r, n)
     res = (int(x) * int(invR)) % int(n)
     result = str(res)
     returnString = (
