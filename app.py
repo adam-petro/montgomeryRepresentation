@@ -12,7 +12,16 @@ import sys
 import random
 import math
 #import unittest
-r = 64  #2^6
+#r = 64  #2^6
+
+
+def findClosestPowerOfTwo(n):
+    n = int(n)
+    res = 2
+    while (res < n):
+        res = res * 2
+    return res
+
 
 def inverznyEuklid(a, m):
     a = int(a)
@@ -31,30 +40,33 @@ def inverznyEuklid(a, m):
         a = t
         t = y
 
-        y = x-q*y
+        y = x - q * y
         x = t
 
     if x < 0:
-        x = x+m0
+        x = x + m0
 
     return x
 
+
 def convertToMontgomery(x, n):
     #r = 64  # 2^6
-    res = (int(x)*int(r)) % int(n)
+    r = findClosestPowerOfTwo(n)
+    res = (int(x) * int(r)) % int(n)
     result = str(res)
     returnString = (
-        f"<span style=\"font-size:20px\">x: {x}<br>n: {n}<br>result: {result}</span>"
+        f"<span style=\"font-size:20px\">x: {x}<br>r: {r}<br>n: {n}<br>result: {result}</span><br><br><br><br><span style=\"font-style:italic; font-size:20px\">{result} = {x}*{r} mod {n}</span>"
     )
     return returnString
 
 
 def convertFromMontgomery(x, n):
+    r = findClosestPowerOfTwo(n)
     invR = inverznyEuklid(r, n)
-    res = (int(x)*int(invR)) % int(n)
+    res = (int(x) * int(invR)) % int(n)
     result = str(res)
     returnString = (
-        f"<span style=\"font-size:20px\">x: {x}<br>n: {n}<br>result: {result}</span>"
+        f"<span style=\"font-size:20px\">x: {x}<br>r: {r}<br>n: {n}<br>result: {result}</span>"
     )
     return returnString
 
@@ -191,7 +203,6 @@ class Ui_MainWindow(object):
 #                 if mr.convert_out(v) != pow(x, y, mod):
 #                     raise AssertionError()
 
-
 # class MontgomeryReducer:
 #
 #     def __init__(self, mod):
@@ -258,8 +269,6 @@ class Ui_MainWindow(object):
 #             return a % mod
 #         else:
 #             raise ValueError("Reciprocal does not exist")
-
-
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
